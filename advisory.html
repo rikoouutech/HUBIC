@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Corporate Advisory Council — HUBIC</title>
+<meta name="description" content="Join the HUBIC Corporate Advisory Council. A select group of enterprise leaders guiding the next generation of autonomous accounting and intercompany financial technology.">
+<style>
+:root{
+  --bg:   #080B12;
+  --bg1:  #0D1117;
+  --bg2:  #111827;
+  --high: #F1F5F9;
+  --med:  #94A3B8;
+  --low:  #475569;
+  --bdr:  rgba(255,255,255,0.07);
+  --bdr2: rgba(255,255,255,0.13);
+  --cyan: #00E5D8;
+  --cyan2:#00C4B8;
+  --cbdr: rgba(0,229,216,0.25);
+  --cglow:rgba(0,229,216,0.08);
+  --cglow2:rgba(0,229,216,0.12);
+  --serif:'Georgia',serif;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'SF Mono','Fira Code',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--high);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── Nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;
+  background:rgba(8,11,18,0.88);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--bdr);
+}
+.nav-logo{font-size:20px;font-weight:700;letter-spacing:-.3px;color:var(--high);text-decoration:none}
+.nav-logo span{color:var(--cyan)}
+.nav-back{font-size:13px;font-weight:500;color:var(--med);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .15s}
+.nav-back:hover{color:var(--high)}
+.nav-back::before{content:'←';font-size:14px}
+.nav-label{font-size:12px;font-weight:600;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase}
+
+/* ── Hero ── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:140px 60px 100px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:900px;height:900px;
+  background:radial-gradient(ellipse,rgba(0,229,216,0.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{max-width:780px;margin:0 auto;position:relative}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:600;color:var(--cyan);letter-spacing:.16em;text-transform:uppercase;
+  background:var(--cglow);border:1px solid var(--cbdr);border-radius:100px;
+  padding:6px 18px;margin-bottom:32px;
+}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-headline{
+  font-family:var(--serif);font-size:clamp(36px,5.5vw,62px);font-weight:400;
+  line-height:1.12;color:var(--high);margin-bottom:24px;
+}
+.hero-headline em{color:var(--cyan);font-style:italic}
+.hero-sub{
+  font-size:clamp(15px,1.8vw,18px);color:var(--med);line-height:1.75;
+  max-width:620px;margin:0 auto 44px;
+}
+.hero-sub strong{color:var(--high);font-weight:500}
+.btn-primary{
+  display:inline-block;padding:15px 36px;
+  background:var(--cyan);color:#080B12;
+  font-size:14px;font-weight:700;letter-spacing:.04em;
+  border-radius:8px;text-decoration:none;border:none;cursor:pointer;
+  transition:background .15s,transform .15s,box-shadow .15s;
+}
+.btn-primary:hover{background:var(--cyan2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,229,216,0.28)}
+.hero-note{margin-top:20px;font-size:12px;color:var(--low)}
+
+/* ── Section commons ── */
+.section{padding:100px 60px}
+.section-inner{max-width:1060px;margin:0 auto}
+.section-eyebrow{font-size:11px;font-weight:600;color:var(--cyan);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'';width:24px;height:1px;background:var(--cyan);opacity:.6}
+.section-title{font-family:var(--serif);font-size:clamp(28px,3.5vw,42px);font-weight:400;line-height:1.18;color:var(--high);margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--med);line-height:1.7;max-width:580px;margin-bottom:56px}
+
+/* ── Value cards ── */
+.value-section{background:var(--bg1)}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.value-card{
+  background:var(--bg2);border:1px solid var(--bdr);border-radius:16px;
+  padding:36px 30px;position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s;
+}
+.value-card:hover{border-color:var(--cbdr);transform:translateY(-3px)}
+.value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .2s}
+.value-card:hover::before{opacity:1}
+.value-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--cglow2);border:1px solid var(--cbdr);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:20px;
+}
+.value-label{font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.value-title{font-size:18px;font-weight:600;color:var(--high);margin-bottom:12px}
+.value-body{font-size:14px;color:var(--med);line-height:1.7}
+
+/* ── Form ── */
+.form-section{background:var(--bg)}
+.form-wrap{max-width:640px;margin:0 auto}
+.form-card{
+  background:var(--bg1);border:1px solid var(--bdr);border-radius:20px;
+  padding:48px 44px;
+}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--med);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--bg2);border:1px solid var(--bdr2);border-radius:8px;
+  padding:12px 16px;color:var(--high);font-size:14px;font-family:var(--sans);
+  outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,216,0.1);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--low)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+.field select option{background:var(--bg2);color:var(--high)}
+.field textarea{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-submit{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--cyan);color:#080B12;
+  font-size:14px;font-weight:700;letter-spacing:.04em;
+  border:none;border-radius:8px;cursor:pointer;
+  transition:background .15s,transform .15s,box-shadow .15s;
+}
+.form-submit:hover{background:var(--cyan2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,229,216,0.25)}
+.form-privacy{margin-top:14px;font-size:11.5px;color:var(--low);text-align:center}
+.form-success{display:none;text-align:center;padding:40px 0}
+.form-success.show{display:block}
+.form-success-icon{font-size:48px;margin-bottom:16px}
+.form-success-title{font-size:22px;font-weight:600;color:var(--high);margin-bottom:10px}
+.form-success-body{font-size:15px;color:var(--med);line-height:1.7}
+
+/* ── Footer ── */
+footer{padding:40px 60px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-size:17px;font-weight:700;color:var(--high)}
+.footer-logo span{color:var(--cyan)}
+.footer-copy{font-size:12px;color:var(--low)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  nav{padding:16px 24px}
+  .hero,.section{padding:100px 24px 70px}
+  .value-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .form-card{padding:32px 24px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HUB<span>IC</span></a>
+  <span class="nav-label">Corporate Advisory Council</span>
+  <a href="index.html" class="nav-back">Back to main site</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Founding Member Applications Open</div>
+    <h1 class="hero-headline">Shape the Future of<br><em>Intercompany Operations with AI</em></h1>
+    <p class="hero-sub">
+      Join the <strong>HUBIC Corporate Advisory Council</strong> — a select group of enterprise leaders
+      guiding the next generation of autonomous accounting and intercompany financial technology.
+    </p>
+    <a href="#apply" class="btn-primary">Apply for the Council</a>
+    <p class="hero-note">Applications reviewed on a rolling basis &middot; Limited seats available</p>
+  </div>
+</section>
+
+<!-- VALUE PROPOSITIONS -->
+<section class="section value-section" id="benefits">
+  <div class="section-inner">
+    <div class="section-eyebrow">What Members Receive</div>
+    <h2 class="section-title">Built for leaders who shape<br>the future of enterprise finance</h2>
+    <p class="section-sub">Council membership is by invitation or application only. Members receive meaningful access — not just a title.</p>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="value-icon">&#9889;</div>
+        <div class="value-label">Early Access</div>
+        <div class="value-title">Deploy Before Anyone Else</div>
+        <div class="value-body">Be among the first enterprises to deploy and test HUBIC's AI Agents in your own environment — at no cost. Your real-world feedback shapes what we build, and you gain a head start on automation your competitors don't yet have.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">&#128101;</div>
+        <div class="value-label">Executive Networking</div>
+        <div class="value-title">Connect With Peers Facing the Same Challenges</div>
+        <div class="value-body">Access a curated peer network of CFOs, Controllers, VP Finance, and Tax Directors from multinationals across industries. Share what's working, what isn't, and build relationships with forward-thinking operators who understand the complexity you navigate daily.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">&#127919;</div>
+        <div class="value-label">Direct Roadmap Influence</div>
+        <div class="value-title">Guide What We Build Next</div>
+        <div class="value-body">Council members have a direct seat at the table on product decisions — guiding which intercompany processes our AI Agents automate next. Your priorities become our priorities. This is not a focus group; it is co-development with practitioners.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="section form-section" id="apply">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <div class="section-eyebrow" style="justify-content:center">Council Application</div>
+      <h2 class="section-title" style="text-align:center">Apply for the HUBIC<br>Corporate Advisory Council</h2>
+      <p class="section-sub" style="text-align:center;margin:0 auto 40px">We review every application personally. We are looking for enterprise finance and operations leaders with hands-on experience managing intercompany complexity.</p>
+
+      <div class="form-card">
+        <div class="form-success" id="formSuccess">
+          <div class="form-success-icon">&#10003;</div>
+          <div class="form-success-title">Application Received</div>
+          <div class="form-success-body">Thank you for applying. Our team reviews every application personally and will be in touch within three business days.</div>
+        </div>
+
+        <form id="advisoryForm" onsubmit="handleAdvisorySubmit(event)" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="a-name">Full Name *</label>
+              <input type="text" id="a-name" name="name" placeholder="Your full name" required>
+            </div>
+            <div class="field">
+              <label for="a-email">Corporate Email *</label>
+              <input type="email" id="a-email" name="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="a-title">Title / Role *</label>
+              <input type="text" id="a-title" name="title" placeholder="e.g. VP of Finance, Controller, Director Tax" required>
+            </div>
+            <div class="field">
+              <label for="a-company">Company Name *</label>
+              <input type="text" id="a-company" name="company" placeholder="Your company name" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="a-size">Company Size *</label>
+            <select id="a-size" name="company_size" required>
+              <option value="" disabled selected>Select company size</option>
+              <option value="100-500">100 – 500 employees</option>
+              <option value="500-2000">500 – 2,000 employees</option>
+              <option value="2000-10000">2,000 – 10,000 employees</option>
+              <option value="10000+">10,000+ employees</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="a-workflow">What is your most time-consuming manual workflow today? *</label>
+            <textarea id="a-workflow" name="workflow" placeholder="Describe the intercompany or finance workflow that consumes the most time in your team — e.g. month-end IC reconciliation, transfer pricing documentation, import duty calculation, consolidation eliminations..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Submit Application &rarr;</button>
+          <p class="form-privacy">&#128274; Your information is kept strictly confidential and will never be shared with third parties.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">HUB<span>IC</span></div>
+  <div class="footer-copy">&copy; 2026 FinQuipu Inc. &middot; <a href="index.html" style="color:var(--low);text-decoration:none">hubic.finquipu.ai</a></div>
+</footer>
+
+<script>
+function handleAdvisorySubmit(e) {
+  e.preventDefault();
+  var form = document.getElementById('advisoryForm');
+  var required = form.querySelectorAll('[required]');
+  var valid = true;
+  required.forEach(function(el) {
+    if (!el.value.trim()) { el.style.borderColor = '#EF4444'; valid = false; }
+    else el.style.borderColor = '';
+  });
+  if (!valid) return;
+
+  // Replace this block with your form backend (Formspree, Netlify Forms, etc.)
+  form.style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+}
+</script>
+</body>
+</html>
