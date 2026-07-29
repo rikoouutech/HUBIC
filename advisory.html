@@ -233,6 +233,12 @@ footer{padding:40px 60px;border-top:1px solid var(--bdr);display:flex;align-item
         </div>
 
         <form id="advisoryForm" onsubmit="handleAdvisorySubmit(event)" novalidate>
+          <input type="hidden" name="enquiry_type" value="Advisory Council Application">
+          <input type="hidden" name="form_source" value="advisory-page">
+          <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+            <label for="a-website">Website</label>
+            <input type="text" id="a-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div class="form-row">
             <div class="field">
               <label for="a-name">Full Name *</label>
@@ -267,7 +273,8 @@ footer{padding:40px 60px;border-top:1px solid var(--bdr);display:flex;align-item
             <label for="a-workflow">What is your most time-consuming manual workflow today? *</label>
             <textarea id="a-workflow" name="workflow" placeholder="Describe the intercompany or finance workflow that consumes the most time in your team — e.g. month-end IC reconciliation, transfer pricing documentation, import duty calculation, consolidation eliminations..." required></textarea>
           </div>
-          <button type="submit" class="form-submit">Submit Application &rarr;</button>
+          <div id="formError" style="display:none;color:#EF4444;font-size:13px;margin-bottom:12px"></div>
+          <button type="submit" class="form-submit" id="formSubmitBtn">Submit Application &rarr;</button>
           <p class="form-privacy">&#128274; Your information is kept strictly confidential and will never be shared with third parties.</p>
         </form>
       </div>
@@ -284,17 +291,55 @@ footer{padding:40px 60px;border-top:1px solid var(--bdr);display:flex;align-item
 function handleAdvisorySubmit(e) {
   e.preventDefault();
   var form = document.getElementById('advisoryForm');
+  var errorEl = document.getElementById('formError');
+  var btn = document.getElementById('formSubmitBtn');
+  errorEl.style.display = 'none';
+
   var required = form.querySelectorAll('[required]');
   var valid = true;
   required.forEach(function(el) {
     if (!el.value.trim()) { el.style.borderColor = '#EF4444'; valid = false; }
     else el.style.borderColor = '';
   });
-  if (!valid) return;
+  if (!valid) {
+    errorEl.textContent = 'Please fill in all required fields.';
+    errorEl.style.display = 'block';
+    return;
+  }
 
-  // Replace this block with your form backend (Formspree, Netlify Forms, etc.)
-  form.style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
+  var email = document.getElementById('a-email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  var data = Object.fromEntries(new FormData(form).entries());
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  fetch('/api/enquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+    .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+    .then(function (result) {
+      if (!result.ok || !result.json.ok) {
+        throw new Error((result.json && result.json.error) || 'Something went wrong. Please try again.');
+      }
+      form.style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    })
+    .catch(function (err) {
+      errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+      errorEl.style.display = 'block';
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application →';
+    });
 }
 </script>
 </body>

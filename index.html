@@ -657,6 +657,12 @@ footer{background:var(--bg);border-top:1px solid var(--bdr);padding:40px 60px;di
         <div class="modal-sub" id="modalSub">Fill in your details and we will be in touch within one business day.</div>
 
         <form id="hubicForm" onsubmit="handleSubmit(event)" novalidate>
+          <input type="hidden" id="f-enquiry-type" name="enquiry_type" value="Demo Request">
+          <input type="hidden" name="form_source" value="index-modal">
+          <div class="field" style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div class="field">
             <label for="f-name">Name *</label>
             <input type="text" id="f-name" name="name" placeholder="Your full name" required>
@@ -682,7 +688,8 @@ footer{background:var(--bg);border-top:1px solid var(--bdr);padding:40px 60px;di
             <span class="checkbox-custom"></span>
             <span>I would like to request a product demonstration</span>
           </label>
-          <button type="submit" class="modal-submit">Submit &rarr;</button>
+          <div id="modalError" style="display:none;color:#EF4444;font-size:13px;margin-bottom:12px"></div>
+          <button type="submit" class="modal-submit" id="modalSubmitBtn">Submit &rarr;</button>
           <div class="modal-privacy">&#128274; Your information is kept strictly confidential and will never be shared with third parties.</div>
         </form>
       </div>
@@ -715,10 +722,12 @@ function openModal(type) {
     eyebrow.textContent = 'Investor Enquiry';
     title.textContent   = 'Connect with our team';
     sub.textContent     = 'Fill in your details and we will arrange a conversation with our leadership team.';
+    document.getElementById('f-enquiry-type').value = 'Investor Enquiry';
   } else {
     eyebrow.textContent = 'Get in Touch';
     title.textContent   = 'See HUBIC in action';
     sub.textContent     = 'Fill in your details and we will be in touch within one business day.';
+    document.getElementById('f-enquiry-type').value = 'Demo Request';
   }
   document.getElementById('modalSuccess').classList.remove('show');
   document.getElementById('modalFormWrap').classList.remove('hidden');
@@ -746,20 +755,51 @@ document.addEventListener('keydown', function (e) {
 /* Form submit */
 function handleSubmit(e) {
   e.preventDefault();
+  var errorEl = document.getElementById('modalError');
+  var btn     = document.getElementById('modalSubmitBtn');
+  errorEl.style.display = 'none';
+
   var name    = document.getElementById('f-name').value.trim();
   var company = document.getElementById('f-company').value.trim();
   var email   = document.getElementById('f-email').value.trim();
   if (!name || !company || !email) {
-    alert('Please fill in Name, Company, and Email Address.');
+    errorEl.textContent = 'Please fill in Name, Company, and Email Address.';
+    errorEl.style.display = 'block';
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert('Please enter a valid email address.');
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.style.display = 'block';
     return;
   }
-  /* Show success — wire fetch() to your backend/CRM here */
-  document.getElementById('modalFormWrap').classList.add('hidden');
-  document.getElementById('modalSuccess').classList.add('show');
+
+  var form = document.getElementById('hubicForm');
+  var data = Object.fromEntries(new FormData(form).entries());
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  fetch('/api/enquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+    .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+    .then(function (result) {
+      if (!result.ok || !result.json.ok) {
+        throw new Error((result.json && result.json.error) || 'Something went wrong. Please try again.');
+      }
+      document.getElementById('modalFormWrap').classList.add('hidden');
+      document.getElementById('modalSuccess').classList.add('show');
+    })
+    .catch(function (err) {
+      errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+      errorEl.style.display = 'block';
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Submit →';
+    });
 }
 </script>
 
