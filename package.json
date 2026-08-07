@@ -2,6 +2,9 @@
   "name": "hubic",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "build": "node build.js"
+  },
   "dependencies": {
     "nodemailer": "^6.9.14"
   }
